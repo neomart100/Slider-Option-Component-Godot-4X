@@ -3,102 +3,102 @@ extends MarginContainer
 var optionIndex:int  = 0
 var maxOptions:int = 0
 @export_category("Option Name")
-#Opcion
+#Option
 @export var OptionName:String
 @export_category("Option Array")
-#Diccionario
+#Dictionary
 @export var OptionArray:PackedStringArray
 #Labels
 @onready var nameLabel: Label = $HboxMainOption/marginName/nameLabel
 @onready var optionLabel: Label = $HboxMainOption/MarginContainer/HboxOption/marginOption/optionLabel
-#Bottones
+#Buttons
 @onready var buttonLeft: TextureButton = $HboxMainOption/MarginContainer/HboxOption/buttonLeft
 @onready var buttonRight: TextureButton = $HboxMainOption/MarginContainer/HboxOption/buttonRight
-#Indicadore visual en la parte Inferior
+#Visual indicator at the bottom
 @onready var marginIndicator: MarginContainer = $HboxMainOption/MarginContainer/marginIndicator
 @onready var HboxIndicator: HBoxContainer = $HboxMainOption/MarginContainer/marginIndicator/VboxSeparator/HBoxIndicator
 
-##Señal que envia el Index a la interfaz
+##Signal that sends the Index to the interface
 signal IDX(optionIndex)
 
 
 func _ready() -> void:
-	#Esperar a que todo se ejecute correctamente
+	#Wait for everything to execute correctly
 	await get_tree().process_frame
-	#inicializar la seleccion de las Opciones
+	#Initialize the selection of options
 	selectOption(optionIndex)
-	#Agregamos los rectangulos en la parte inferior del la Opcion como indicador visual
+	#Add the rectangles at the bottom of the option as a visual indicator
 	forVisualIndicator()
-	#Incializar seleccion del indicador visual
+	#Initialize selection of the visual indicator
 	visualIndicator(optionIndex)
-	#Maximo numero de OPciones que tendra el componente
-	#Menos 1 por que por algun motivo siempre queda un espacio vacio en packedArray
-	#Si sabes por que dimero :D
+	#Maximum number of options the component will have
+	#Minus 1 because for some reason there is always an empty space in packedArray
+	#If you know why, tell me :D
 	maxOptions = OptionArray.size() -1
-	#Hacemos que el name label sea igual OptionName del inspector
+	#Make the name label equal to OptionName from the inspector
 	nameLabel.text = OptionName
 
 
 
 
-##Funcion que contiene la logica para el slider de Opciones
+##Function that contains the logic for the options slider
 func selectOption(indice:int):
 	if indice != null:
 		optionIndex = indice
 		if optionIndex != -1:
-			##Recorremos el Array con las Opciones
+			##Iterate through the Array with the options
 			for i in range(OptionArray.size()):
-				#pasamos el Array con la Opcion seleccionada
+				#Pass the array with the selected option
 				var SelectOptionArray = OptionArray[i]
 				if i == optionIndex:
-					#imprimios en la interfaz
+					#Display in the interface
 					optionLabel.text = SelectOptionArray
-					##Emitir señal con el Index hacia el nodo que quieras para
-					#comparar el IDX con un match y asi usarlo
+					##Emit a signal with the Index to the desired node
+					#to compare the IDX with a match and use it accordingly
 					IDX.emit(optionIndex)
-					print("el index es:", optionIndex)
+					print("the index is:", optionIndex)
 
-#Logica que hace que haya rectangulos como indicadores visuales tipo colorRect
-#en la parte inferior de las Opciones
+#Logic that creates rectangles as visual indicators (e.g., ColorRect)
+#at the bottom of the options
 func forVisualIndicator():
-	#el numero de colorect sea igual al numero de Opciones
+	#The number of ColorRects equals the number of options
 	for i in range(OptionArray.size()):
-		##crear rectangulo tipo color  para rellenar el marginIndicator/HboxIndicator
+		##Create a rectangle of type Color to fill the marginIndicator/HboxIndicator
 		var fillColorect:ColorRect = ColorRect.new()
-		##Tamaño del rectangulo 
+		##Rectangle size
 		fillColorect.custom_minimum_size = Vector2(8, 4)
-		#Agregados al HboxIndicator
+		#Add to the HboxIndicator
 		HboxIndicator.add_child(fillColorect)
 		
-#logica para que el indicador visual sea a corde a la Opcion seleccionada
+#Logic to make the visual indicator match the selected option
 func visualIndicator(indice):
 	optionIndex = indice
-	##Recorre el HboxIndicator con todos los coloreRects
+	##Iterate through the HboxIndicator with all the ColorRects
 	for i in range(HboxIndicator.get_child_count()):
 		
 		var visualrectangleIndicator = HboxIndicator.get_child(i)
-		##Seleccionar una Opcion y cambiar el color del color rect
+		##Select an option and change the ColorRect color
 		if i == indice:
 			visualrectangleIndicator.modulate = Color("ffffff")
-		##Si no esta seleccionado hacer que el color  sea por defecto
+		##If not selected, make the color default
 		else:
 			visualrectangleIndicator.modulate = Color("9ba2c4")
 
-#region Botones de seleccion
+#region Selection buttons
 #LEFT
 func _on_button_left_pressed() -> void:
 	if optionIndex > 0:
-		#Opciones 
+		#Options 
 		selectOption(optionIndex - 1)
-		#indicador visual de Opciones(parte inferior)
+		#Visual options indicator (bottom)
 		visualIndicator(optionIndex)
 
 #RIGHT
 func _on_button_right_pressed() -> void:
 	if optionIndex < maxOptions:
-		#Opciones 
+		#Options 
 		selectOption(optionIndex + 1)
-		#indicador visual de Opciones(parte inferior)
+		#Visual options indicator (bottom)
 		visualIndicator(optionIndex)
 	
 #endregion
