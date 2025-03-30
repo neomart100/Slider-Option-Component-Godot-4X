@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://banskqjxj228g"]
+
+[ext_resource type="Script" path="res://component/example.gd" id="1_pw63s"]
+[ext_resource type="PackedScene" uid="uid://cj7vmtahgn8fo" path="res://component/optionComponent.tscn" id="1_rxri0"]
+[ext_resource type="Texture2D" uid="uid://dncxp1mtmv57o" path="res://icon.svg" id="2_a8x7a"]
+
+[node name="example" type="Node2D"]
+script = ExtResource("1_pw63s")
+
+[node name="OptionConainer" parent="." instance=ExtResource("1_rxri0")]
+offset_left = 416.0
+offset_top = 184.0
+offset_right = 728.0
+offset_bottom = 219.0
+OptionName = "Godot color"
+OptionArray = PackedStringArray("blue", "red", "yellow", "green")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(571, 330)
+texture = ExtResource("2_a8x7a")
+
+[connection signal="IDX" from="OptionConainer" to="." method="_on_option_conainer_idx"]

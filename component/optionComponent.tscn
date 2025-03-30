@@ -1,0 +1,98 @@
+[gd_scene load_steps=5 format=3 uid="uid://cj7vmtahgn8fo"]
+
+[ext_resource type="Script" path="res://component/optionComponent.gd" id="1_ewbdj"]
+[ext_resource type="Texture2D" uid="uid://d36p3ss8i1kbf" path="res://component/edgeBG48X48.png" id="1_qf5b5"]
+[ext_resource type="Texture2D" uid="uid://bxvun0bn6auh4" path="res://component/flechaLEFT.png" id="2_r2lot"]
+[ext_resource type="Texture2D" uid="uid://dx8t2rh16jxyp" path="res://component/flechaRIGHT.png" id="3_yqkp7"]
+
+[node name="OptionConainer" type="MarginContainer"]
+custom_minimum_size = Vector2(300, 0)
+offset_right = 312.0
+offset_bottom = 35.0
+script = ExtResource("1_ewbdj")
+
+[node name="BG" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("1_qf5b5")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="HboxMainOption" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="marginName" type="MarginContainer" parent="HboxMainOption"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/margin_left = 4
+
+[node name="nameLabel" type="Label" parent="HboxMainOption/marginName"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Option"
+
+[node name="MarginContainer" type="MarginContainer" parent="HboxMainOption"]
+layout_mode = 2
+
+[node name="BG" type="NinePatchRect" parent="HboxMainOption/MarginContainer"]
+modulate = Color(0.545098, 0.603922, 0.67451, 1)
+layout_mode = 2
+texture = ExtResource("1_qf5b5")
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="HboxOption" type="HBoxContainer" parent="HboxMainOption/MarginContainer"]
+layout_mode = 2
+
+[node name="buttonLeft" type="TextureButton" parent="HboxMainOption/MarginContainer/HboxOption"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("2_r2lot")
+
+[node name="marginOption" type="MarginContainer" parent="HboxMainOption/MarginContainer/HboxOption"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+
+[node name="optionLabel" type="Label" parent="HboxMainOption/MarginContainer/HboxOption/marginOption"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 11
+text = "sample option"
+horizontal_alignment = 1
+
+[node name="buttonRight" type="TextureButton" parent="HboxMainOption/MarginContainer/HboxOption"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("3_yqkp7")
+
+[node name="marginIndicator" type="MarginContainer" parent="HboxMainOption/MarginContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_vertical = 8
+size_flags_stretch_ratio = 6.29
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_right = 25
+
+[node name="VboxSeparator" type="VBoxContainer" parent="HboxMainOption/MarginContainer/marginIndicator"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="HBoxIndicator" type="HBoxContainer" parent="HboxMainOption/MarginContainer/marginIndicator/VboxSeparator"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
+
+[node name="Separador" type="MarginContainer" parent="HboxMainOption/MarginContainer/marginIndicator/VboxSeparator"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="HboxMainOption/MarginContainer/HboxOption/buttonLeft" to="." method="_on_button_left_pressed"]
+[connection signal="pressed" from="HboxMainOption/MarginContainer/HboxOption/buttonRight" to="." method="_on_button_right_pressed"]
